@@ -3,9 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Telegram Web App</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+        button { padding: 10px 20px; background: #0088cc; color: white; border: none; cursor: pointer; }
+        button:hover { background: #0077b3; }
+    </style>
 </head>
 <body>
-    <div>Test</div>
+    <h1>Привет из Web App!</h1>
+    <p id="user-name"></p>
+    <button onclick="sayHello()">Нажми меня</button>
+
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script>
+        const tg = window.Telegram.WebApp;
+        tg.ready();
+
+        // Показываем имя пользователя
+        const user = tg.initDataUnsafe.user;
+        document.getElementById("user-name").innerText = 
+            user ? `Привет, ${user.first_name}!` : "Привет, гость!";
+
+        // Функция для кнопки
+        function sayHello() {
+            alert("Hello from your Web App!");
+            tg.expand(); // Разворачивает Web App на весь экран
+        }
+
+        // Закрытие Web App по желанию
+        tg.MainButton.setText("Закрыть").show().onClick(() => tg.close());
+    </script>
 </body>
 </html>
+
